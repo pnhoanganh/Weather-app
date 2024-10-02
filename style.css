@@ -189,3 +189,28 @@ input:focus {
   width: 35px;
   height: 35px;
 }
+
+.search-city {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 25px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.search-city img {
+  height: 200px;
+  width: 100px;
+}
+
+.search-city h1 {
+  font-weight: 600;
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.search-city h4 {
+  font-size: 15px;
+}
