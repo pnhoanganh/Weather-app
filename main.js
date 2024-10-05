@@ -53,6 +53,15 @@ function getWheatherIcon(id){
   else return 'clouds.svg'
 
 }
+function getCurrentDate(){
+  const currentDate = new Date();
+  const options = {
+    weekday: 'short',
+    day: '2-digit',
+    month: 'short'
+  };
+  return currentDate.toLocaleDateString('en-GB', options);
+}
 
 // display sections for each case
 function showDisplaySection(section) {
@@ -84,6 +93,8 @@ async function updateWeather(city) {
   conditional.textContent = main
   humidityValue.textContent = humidity + ' %'
   windSpeedValue.textContent = speed + 'M/s'
+  currentDate .textContent = getCurrentDate()
+
 
   weatherSummaryImg.src=`./assets/weather/${getWheatherIcon(id)}`
 
