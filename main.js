@@ -10,6 +10,7 @@ const humidityValue = document.querySelector('.humidity-value')
 const currentDate = document.querySelector('.current-date')
 const weatherSummaryImg = document.querySelector('.weatherSumImg')
 
+const forecastContainer = document.querySelector('.forecast-container'); // Thêm phần tử chứa dự báo
 
 const apiKey = "34cfc60860c65187b56b96404e048411";
 
@@ -49,10 +50,10 @@ function getWheatherIcon(id){
   if (id <= 531) return 'rain.svg'
   if (id <= 622) return 'snow.svg'
   if (id <= 781) return 'atmosphere.svg'
-  if (id <= 804) return 'clear.svg'
+  if (id <= 800) return 'clear.svg'
   else return 'clouds.svg'
-
 }
+
 function getCurrentDate(){
   const currentDate = new Date();
   const options = {
@@ -77,32 +78,56 @@ async function updateWeather(city) {
 
   if (weatherData.cod != 200) {
     showDisplaySection(notFoundMessage);
+    return;
   }
+
   //change name city, temp,...
   console.log(weatherData);
 
   const {
-    name: contry,
+    name: country,
     main: { temp: temperature, humidity },
-    weather: [{ id, main}],
+    weather: [{ id, main }],
     wind: { speed }
-  } = weatherData
+  } = weatherData;
 
-  cityName.textContent = contry
-  temp.textContent = Math.round(temperature) + ' ℃'
-  conditional.textContent = main
-  humidityValue.textContent = humidity + ' %'
-  windSpeedValue.textContent = speed + 'M/s'
-  currentDate .textContent = getCurrentDate()
+  cityName.textContent = country;
+  temp.textContent = Math.round(temperature) + ' ℃';
+  conditional.textContent = main;
+  humidityValue.textContent = humidity + ' %';
+  windSpeedValue.textContent = speed + 'M/s';
+  currentDate.textContent = getCurrentDate();
+  weatherSummaryImg.src = `./assets/weather/${getWheatherIcon(id)}`;
 
-
-  weatherSummaryImg.src=`./assets/weather/${getWheatherIcon(id)}`
-
-
+  // Gọi API dự báo thời tiết
+  const forecastData = await getFectchData("forecast", city);
+  displayWeatherForecast(forecastData);
 
   showDisplaySection(weatherInfor);
 }
 
+// Hàm hiển thị dự báo thời tiết cho các ngày tiếp theo
+function displayWeatherForecast(data) {
+  forecastContainer.innerHTML = ''; // Xóa dữ liệu cũ
 
+  // Lọc các mục dự báo thời tiết (ví dụ: mỗi 24 giờ)
+  const dailyForecasts = data.list.filter(forecast => forecast.dt_txt.includes('12:00:00'));
 
+  dailyForecasts.forEach(day => {
+    const date = new Date(day.dt_txt);
+    const icon = day.weather[0].icon;
+    const temperature = Math.round(day.main.temp);
+    const description = day.weather[0].description;
 
+    const forecastHTML = `
+      <div class="forecast-day">
+        <h3>${date.toLocaleDateString()}</h3>
+        <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${description}">
+        <p>${temperature}°C</p>
+        <p>${description}</p>
+      </div>
+    `;
+
+    forecastContainer.innerHTML += forecastHTML;
+  });
+}
