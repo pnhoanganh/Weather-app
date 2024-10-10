@@ -106,7 +106,6 @@ async function updateWeather(city) {
   showDisplaySection(weatherInfor);
 }
 
-// Hàm hiển thị dự báo thời tiết cho các ngày tiếp theo
 function displayWeatherForecast(data) {
   forecastContainer.innerHTML = ''; // Xóa dữ liệu cũ
 
@@ -119,9 +118,12 @@ function displayWeatherForecast(data) {
     const temperature = Math.round(day.main.temp);
     const description = day.weather[0].description;
 
+    // Định dạng ngày thành dạng "dd MMM" (ví dụ: "10 Oct")
+    const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+
     const forecastHTML = `
       <div class="forecast-day">
-        <h3>${date.toLocaleDateString()}</h3>
+        <h3>${formattedDate}</h3>
         <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${description}">
         <p>${temperature}°C</p>
         <p>${description}</p>
@@ -131,3 +133,4 @@ function displayWeatherForecast(data) {
     forecastContainer.innerHTML += forecastHTML;
   });
 }
+
