@@ -111,7 +111,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
   gap: 10px;
 }
 
@@ -129,7 +129,7 @@ input:focus {
 }
 
 .weather-conditional {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
 }
@@ -156,7 +156,7 @@ input:focus {
 }
 
 .forecast-container::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 
 .forecast-container::-webkit-scrollbar-track,
@@ -166,14 +166,14 @@ input:focus {
 }
 
 .forecast-day {
-  min-width: 80px;
+  min-width: 100px;
   background: rgba(255, 255, 255, 0.1);
   padding: 10px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
   transition: 0.3s background;
 }
 
@@ -188,11 +188,13 @@ input:focus {
 
 .forecast-day h3 {
   font-size: 14px;
+  font-weight: 400;
 }
 
 .forecast-day p {
   font-size: 12px;
   margin: 0;
+  text-align: center;
 }
 
 /* Cập nhật cho các phần khác */
