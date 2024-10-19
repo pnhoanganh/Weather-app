@@ -39,9 +39,23 @@ cityInput.addEventListener("keydown", (e) => {
 async function getFectchData(endPoint, city) {
   const apiUrl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
 
-  const respond = await fetch(apiUrl);
+ // handle fetch data error
+  try {
+    const respond = await fetch(apiUrl);
 
-  return respond.json();
+    if (!respond.ok) {
+      throw new Error(`${respond.status} - ${respond.statusText}`);
+    }
+
+    return await respond.json();
+  } catch (error) {
+    showDisplaySection(notFoundMessage);
+    console.error("Error: ", error);
+
+    setTimeout(() => {
+      alert(`Error: ${error.message}`);
+    }, 500);
+  }
 }
 
 function getWheatherIcon(id){
